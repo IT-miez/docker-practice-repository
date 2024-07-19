@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./example-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - REQUEST_ORIGIN=http://127.0.0.1:5000
+    # Uncomment and adjust the following lines if you have additional environment variables
+    #   - REDIS_HOST=
+    #   - POSTGRES_HOST=
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    #   - POSTGRES_DATABASE=postgres
+
+  frontend:
+    build:
+      context: ./example-frontend
+    ports:
+      - "5000:5000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080/
+    # Uncomment and adjust the following line if you need to set the backend URL at build time
+    #   - REACT_APP_BACKEND_URL=http://backend:8080/
+    command: serve -s -l 5000 build
